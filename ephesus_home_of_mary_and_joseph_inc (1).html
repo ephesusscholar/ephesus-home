@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ephesus Home of Mary and Joseph Inc.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Lexend (Legibility focused) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: 'var(--color-bg-50)',
+                            100: 'var(--color-bg-100)',
+                            500: 'var(--color-primary-500)',
+                            600: 'var(--color-primary-600)',
+                            700: 'var(--color-primary-700)',
+                            accent: 'var(--color-accent)',
+                            surface: 'var(--color-surface)',
+                            text: 'var(--color-text)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Lexend', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            /* Default Warm Palette */
+            --color-bg-50: #fdfbf7;
+            --color-bg-100: #f7f2e8;
+            --color-primary-500: #0284c7;
+            --color-primary-600: #0369a1;
+            --color-primary-700: #075985;
+            --color-accent: #d97706;
+            --color-surface: #ffffff;
+            --color-text: #1e293b;
+            --font-scale: 1;
+        }
+
+        /* Ocean Trust Theme */
+        .theme-ocean {
+            --color-bg-50: #f0f9ff;
+            --color-bg-100: #e0f2fe;
+            --color-primary-500: #0d9488;
+            --color-primary-600: #0f766e;
+            --color-primary-700: #115e59;
+            --color-accent: #f59e0b;
+            --color-surface: #ffffff;
+            --color-text: #0f172a;
+        }
+
+        /* Pastel Joy Theme */
+        .theme-pastel {
+            --color-bg-50: #fff5f5;
+            --color-bg-100: #ffe3e3;
+            --color-primary-500: #e11d48;
+            --color-primary-600: #be123c;
+            --color-primary-700: #9f1239;
+            --color-accent: #8b5cf6;
+            --color-surface: #ffffff;
+            --color-text: #27272a;
+        }
+
+        /* High Contrast Theme */
+        .theme-high-contrast {
+            --color-bg-50: #000000;
+            --color-bg-100: #1a1a1a;
+            --color-primary-500: #ffff00;
+            --color-primary-600: #ffff00;
+            --color-primary-700: #e6e600;
+            --color-accent: #00ffff;
+            --color-surface: #0d0d0d;
+            --color-text: #ffffff;
+        }
+
+        .theme-high-contrast * {
+            border-color: #ffffff !important;
+        }
+
+        /* Dynamic Text Sizing */
+        html {
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        /* High Visibility Focus States for Keyboard Navigation */
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+            outline: 3px solid #f59e0b !important;
+            outline-offset: 3px !important;
+        }
+
+        /* Toast notifications container */
+        #toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-brand-50 text-brand-text font-sans transition-colors duration-200 antialiased min-h-screen flex flex-col">
+
+    <!-- Accessibility Quick Control Bar -->
+    <header class="bg-slate-900 text-white text-xs sm:text-sm py-2 px-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <!-- Screen Reader Live Region Announcement -->
+            <div id="sr-announcement" class="sr-only" aria-live="polite"></div>
+
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-universal-access text-amber-400 text-lg" aria-hidden="true"></i>
+                <span class="font-medium hidden sm:inline">Accessibility Controls:</span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+                <!-- Text Resizing Controls -->
+                <div class="flex items-center bg-slate-800 rounded-lg p-1 border border-slate-700" role="group" aria-label="Text Sizing Controls">
+                    <button onclick="changeFontSize(-0.1)" class="px-2 py-0.5 text-xs font-bold rounded hover:bg-slate-700 focus:bg-slate-700 transition" aria-label="Decrease Font Size">A-</button>
+                    <button onclick="resetFontSize()" class="px-2 py-0.5 text-xs font-bold rounded hover:bg-slate-700 focus:bg-slate-700 transition" aria-label="Reset Font Size">Reset</button>
+                    <button onclick="changeFontSize(0.1)" class="px-2 py-0.5 text-xs font-bold rounded hover:bg-slate-700 focus:bg-slate-700 transition" aria-label="Increase Font Size">A+</button>
+                </div>
+
+                <!-- Contrast / Theme Controls Toggle -->
+                <button onclick="toggleCustomizer()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 px-3 py-1 rounded-md font-semibold text-xs flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-palette" aria-hidden="true"></i>
+                    <span>Customize Theme</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="bg-brand-surface border-b border-slate-200 shadow-sm sticky top-[38px] z-40 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <!-- Logo & Name -->
+                <div class="flex items-center">
+                    <a href="#home" class="flex items-center gap-3 group focus:outline-none rounded-lg p-1">
+                        <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                            <i class="fa-solid fa-hands-holding-child text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg sm:text-xl tracking-tight text-slate-800 leading-tight">Ephesus Home</span>
+                            <span class="text-xs font-medium text-amber-700">of Mary and Joseph Inc.</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-1 lg:space-x-4">
+                    <a href="#home" class="px-3 py-2 rounded-md text-sm font-semibold hover:text-amber-600 transition">Home</a>
+                    <a href="#about" class="px-3 py-2 rounded-md text-sm font-semibold hover:text-amber-600 transition">About Us</a>
+                    <a href="#services" class="px-3 py-2 rounded-md text-sm font-semibold hover:text-amber-600 transition">Services</a>
+                    <a href="#donate" class="px-3 py-2 rounded-md text-sm font-semibold hover:text-amber-600 transition">How to Donate</a>
+                    <a href="#contact" class="px-3 py-2 rounded-md text-sm font-semibold hover:text-amber-600 transition">Contact Us</a>
+                    <a href="#feedback" class="px-3 py-2 rounded-md text-sm font-semibold hover:text-amber-600 transition">Suggestion Box</a>
+                    <a href="#donate" class="ml-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-full shadow hover:shadow-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-heart" aria-hidden="true"></i> Donate
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" class="p-2 rounded-md text-slate-700 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon-bars" aria-hidden="true"></i>
+                        <i class="fa-solid fa-xmark text-2xl hidden" id="menu-icon-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-surface border-t border-slate-200 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-semibold hover:bg-slate-100">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-semibold hover:bg-slate-100">About Us</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-semibold hover:bg-slate-100">Services</a>
+            <a href="#donate" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-semibold hover:bg-slate-100">How to Donate</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-semibold hover:bg-slate-100">Contact Us</a>
+            <a href="#feedback" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-semibold hover:bg-slate-100">Suggestion Box</a>
+            <a href="#donate" onclick="toggleMobileMenu()" class="block w-full text-center mt-3 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2.5 rounded-xl shadow">
+                <i class="fa-solid fa-heart" aria-hidden="true"></i> Donate Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Theme & Accessibility Customizer Drawer -->
+    <div id="customizer-drawer" class="fixed inset-y-0 right-0 max-w-sm w-full bg-slate-900 text-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out p-6 overflow-y-auto">
+        <div class="flex justify-between items-center pb-4 border-b border-slate-700">
+            <h2 class="text-xl font-bold flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-amber-400" aria-hidden="true"></i> Visual Customizer
+            </h2>
+            <button onclick="toggleCustomizer()" class="text-slate-400 hover:text-white p-2 rounded-lg" aria-label="Close Customizer">
+                <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="space-y-6 mt-6">
+            <!-- Theme Selection -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-3">Color Theme Presets</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setTheme('default')" class="p-3 rounded-lg border-2 border-amber-500 bg-slate-800 text-left hover:border-amber-400 transition">
+                        <span class="block text-xs font-bold text-amber-400">Warm Sanctuary</span>
+                        <span class="text-[10px] text-slate-400">Soft golds & sky blue</span>
+                    </button>
+                    <button onclick="setTheme('ocean')" class="p-3 rounded-lg border-2 border-slate-700 bg-slate-800 text-left hover:border-teal-400 transition">
+                        <span class="block text-xs font-bold text-teal-400">Ocean Hope</span>
+                        <span class="text-[10px] text-slate-400">Teal & serene blue</span>
+                    </button>
+                    <button onclick="setTheme('pastel')" class="p-3 rounded-lg border-2 border-slate-700 bg-slate-800 text-left hover:border-rose-400 transition">
+                        <span class="block text-xs font-bold text-rose-400">Pastel Care</span>
+                        <span class="text-[10px] text-slate-400">Warm rose & purple</span>
+                    </button>
+                    <button onclick="setTheme('high-contrast')" class="p-3 rounded-lg border-2 border-slate-700 bg-slate-800 text-left hover:border-yellow-300 transition">
+                        <span class="block text-xs font-bold text-yellow-300">High Contrast</span>
+                        <span class="text-[10px] text-slate-400">Max contrast accessibility</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dyslexia / Reading Font Assistant -->
+            <div class="pt-4 border-t border-slate-800">
+                <div class="flex justify-between items-center mb-2">
+                    <label for="dyslexic-font-toggle" class="text-sm font-semibold text-slate-300">High Legibility Font Mode</label>
+                    <input type="checkbox" id="dyslexic-font-toggle" onchange="toggleLegibilityFont(this.checked)" class="w-5 h-5 accent-amber-500 rounded cursor-pointer">
+                </div>
+                <p class="text-xs text-slate-400">Enhances spacing and font legibility for easier reading.</p>
+            </div>
+
+            <!-- Screen Reader Help -->
+            <div class="pt-4 border-t border-slate-800">
+                <h3 class="text-sm font-semibold text-slate-300 mb-2">Accessibility Shortcuts</h3>
+                <ul class="text-xs space-y-1 text-slate-400">
+                    <li><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded">Tab</kbd> : Navigate links & buttons</li>
+                    <li><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded">Shift + Tab</kbd> : Navigate backwards</li>
+                    <li><kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded">Esc</kbd> : Close modals/drawers</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-content" class="flex-grow">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="relative py-16 md:py-24 bg-gradient-to-br from-brand-50 via-amber-50/50 to-brand-100 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-xs sm:text-sm font-semibold shadow-sm">
+                            <i class="fa-solid fa-house-chimney-heart text-amber-600" aria-hidden="true"></i> A Loving Home for Every Child
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                            Nurturing Hope, Faith & Bright Futures
+                        </h1>
+                        <p class="text-base sm:text-lg text-slate-700 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            Welcome to <strong class="text-slate-900">Ephesus Home of Mary and Joseph Inc.</strong> We are dedicated to providing sanctuary, quality education, holistic health care, and spiritual guidance to children in need.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#donate" class="w-full sm:w-auto text-center bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 text-base">
+                                <i class="fa-solid fa-hand-holding-heart mr-2" aria-hidden="true"></i> Support Our Children
+                            </a>
+                            <a href="#about" class="w-full sm:w-auto text-center bg-brand-surface border-2 border-slate-300 hover:border-slate-400 text-slate-800 font-bold px-8 py-3.5 rounded-2xl shadow-sm transition hover:bg-slate-50 text-base">
+                                Learn Our Story
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual Card / Live Quick Stats -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-brand-surface p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-2xl relative space-y-6">
+                            <div class="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden bg-slate-100 mb-6 border border-slate-200 flex items-center justify-center min-h-[200px]">
+                                <div class="text-center p-6">
+                                    <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <i class="fa-solid fa-child-reaching text-3xl" aria-hidden="true"></i>
+                                    </div>
+                                    <p class="text-xs uppercase tracking-wider font-bold text-amber-800">Safe Haven & Sanctuary</p>
+                                    <p class="text-sm font-medium text-slate-600 mt-1">Providing shelter, affection & dignity since day one.</p>
+                                </div>
+                            </div>
+
+                            <!-- Live Quick Impact Grid -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-amber-50/80 p-4 rounded-2xl border border-amber-200/60 text-center">
+                                    <span class="block text-2xl sm:text-3xl font-extrabold text-amber-800">65+</span>
+                                    <span class="text-xs font-semibold text-slate-600">Children Sheltered</span>
+                                </div>
+                                <div class="bg-blue-50/80 p-4 rounded-2xl border border-blue-200/60 text-center">
+                                    <span class="block text-2xl sm:text-3xl font-extrabold text-blue-800">100%</span>
+                                    <span class="text-xs font-semibold text-slate-600">School Enrolled</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT US SECTION -->
+        <section id="about" class="py-20 bg-brand-surface border-t border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Who We Are</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">About Ephesus Home</h2>
+                    <p class="text-slate-600 text-base sm:text-lg">Founded on faith, compassion, and community support, Ephesus Home of Mary and Joseph Inc. serves as a beacon of love for vulnerable children.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Vision Card -->
+                    <div class="bg-brand-50 p-8 rounded-3xl border border-slate-200/60 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-6 text-xl shadow">
+                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Our Vision</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            A safe, loving, and nurturing society where every child, regardless of background, grows up with dignity, proper education, and the opportunity to fulfill their God-given potential.
+                        </p>
+                    </div>
+
+                    <!-- Mission Card -->
+                    <div class="bg-brand-50 p-8 rounded-3xl border border-slate-200/60 shadow-sm hover:shadow-md transition">
+                        <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-6 text-xl shadow">
+                            <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Our Mission</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            To provide comprehensive residential care, nutritious meals, formal schooling, emotional healing, and spiritual guidance to orphaned, abandoned, and underprivileged children.
+                        </p>
+                    </div>
+
+                    <!-- Core Values Card -->
+                    <div class="bg-brand-50 p-8 rounded-3xl border border-slate-200/60 shadow-sm hover:shadow-md transition md:col-span-2 lg:col-span-1">
+                        <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-6 text-xl shadow">
+                            <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Core Pillars</h3>
+                        <ul class="text-slate-600 text-sm space-y-2">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600" aria-hidden="true"></i> Faith & Spiritual Growth</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600" aria-hidden="true"></i> Compassionate Protection</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600" aria-hidden="true"></i> Academic & Skill Empowerment</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-600" aria-hidden="true"></i> Community & Family Reintegration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Team Statement Banner -->
+                <div class="mt-12 bg-amber-500/10 border border-amber-300 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center md:text-left">
+                        <h4 class="text-lg font-bold text-slate-900">Guided by Dedicated Caregivers & Social Workers</h4>
+                        <p class="text-sm text-slate-600">Our multidisciplinary team ensures each child receives personalized care, psychological support, and love.</p>
+                    </div>
+                    <a href="#contact" class="shrink-0 bg-slate-900 text-white font-semibold text-sm px-6 py-3 rounded-xl hover:bg-slate-800 transition">
+                        Meet Our Staff & Board
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="py-20 bg-brand-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Comprehensive Care</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Our Services & Programs</h2>
+                    <p class="text-slate-600 text-base sm:text-lg">We provide holistic support designed to transform lives from early childhood through youth development.</p>
+                </div>
+
+                <!-- Services Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-brand-surface p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg transition space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mb-4 text-xl">
+                                <i class="fa-solid fa-house-chimney" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Residential Shelter</h3>
+                            <p class="text-slate-600 text-sm mt-2">Safe, secure, and family-like living quarters where children sleep comfortably and feel protected.</p>
+                        </div>
+                        <button onclick="openServiceModal('Shelter Care', 'Our residential program offers a clean, warm environment equipped with 24/7 adult supervision, laundry facilities, and personal belongings space for every child.')" class="text-amber-700 hover:text-amber-800 font-semibold text-sm inline-flex items-center gap-2 pt-2">
+                            Learn more <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-brand-surface p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg transition space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mb-4 text-xl">
+                                <i class="fa-solid fa-apple-whole" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Healthcare & Nutrition</h3>
+                            <p class="text-slate-600 text-sm mt-2">Balanced dietary plans cooked daily, regular medical checkups, dental care, and mental wellbeing support.</p>
+                        </div>
+                        <button onclick="openServiceModal('Health & Nutrition', 'Partnering with local health professionals, we ensure each child receives balanced, nutritious meals, vitamins, routine check-ups, and immediate medical care when needed.')" class="text-amber-700 hover:text-amber-800 font-semibold text-sm inline-flex items-center gap-2 pt-2">
+                            Learn more <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-brand-surface p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg transition space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center mb-4 text-xl">
+                                <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Formal Education</h3>
+                            <p class="text-slate-600 text-sm mt-2">Enrolling every child in accredited local schools, providing books, uniforms, tutors, and computer access.</p>
+                        </div>
+                        <button onclick="openServiceModal('Education Program', 'We support formal schooling from kindergarten through high school, as well as vocational training and higher education assistance for older youths.')" class="text-amber-700 hover:text-amber-800 font-semibold text-sm inline-flex items-center gap-2 pt-2">
+                            Learn more <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bg-brand-surface p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg transition space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center mb-4 text-xl">
+                                <i class="fa-solid fa-hands-praying" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Spiritual Guidance</h3>
+                            <p class="text-slate-600 text-sm mt-2">Values formation, Sunday services, character-building activities, and moral empowerment.</p>
+                        </div>
+                        <button onclick="openServiceModal('Spiritual Guidance', 'Inspired by Mary and Joseph, we cultivate empathy, moral responsibility, and faith through daily devotionals and community activities.')" class="text-amber-700 hover:text-amber-800 font-semibold text-sm inline-flex items-center gap-2 pt-2">
+                            Learn more <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="bg-brand-surface p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg transition space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-rose-100 text-rose-700 rounded-2xl flex items-center justify-center mb-4 text-xl">
+                                <i class="fa-solid fa-people-roof" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Reintegration & Adoption</h3>
+                            <p class="text-slate-600 text-sm mt-2">Working alongside legal authorities to facilitate family reunification or placement with loving adoptive parents.</p>
+                        </div>
+                        <button onclick="openServiceModal('Reintegration Support', 'Our licensed social workers carefully coordinate with government welfare departments to reunite children with kin or secure legal adoptions.')" class="text-amber-700 hover:text-amber-800 font-semibold text-sm inline-flex items-center gap-2 pt-2">
+                            Learn more <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="bg-brand-surface p-6 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-lg transition space-y-4 flex flex-col justify-between">
+                        <div>
+                            <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mb-4 text-xl">
+                                <i class="fa-solid fa-palette" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Recreation & Arts</h3>
+                            <p class="text-slate-600 text-sm mt-2">Music, sports, arts and crafts, and holiday celebrations that build confidence and happy memories.</p>
+                        </div>
+                        <button onclick="openServiceModal('Recreation & Enrichment', 'We offer music lessons, art workshops, sports days, and educational outings to ensure every child enjoys a vibrant childhood.')" class="text-amber-700 hover:text-amber-800 font-semibold text-sm inline-flex items-center gap-2 pt-2">
+                            Learn more <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW TO DONATE SECTION -->
+        <section id="donate" class="py-20 bg-brand-surface border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Ways to Give</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">How to Donate & Support</h2>
+                    <p class="text-slate-600 text-base sm:text-lg">Your generosity directly provides food, shelter, and education for our children.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Donation Impact Calculator -->
+                    <div class="lg:col-span-7 bg-brand-50 p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-6">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-amber-600" aria-hidden="true"></i> Interactive Impact Estimator
+                        </h3>
+                        <p class="text-slate-600 text-sm">Slide to see how your gift directly touches a child's life:</p>
+
+                        <!-- Slider control -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label for="donation-range" class="font-bold text-slate-800">Donation Amount:</label>
+                                <span class="text-2xl font-extrabold text-amber-700">$<span id="donation-amount-text">25</span></span>
+                            </div>
+                            <input type="range" id="donation-range" min="10" max="250" step="5" value="25" oninput="updateImpactCalculator(this.value)" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                            <div class="flex justify-between text-xs text-slate-600 font-semibold">
+                                <span>$10</span>
+                                <span>$100</span>
+                                <span>$250+</span>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Output Box -->
+                        <div id="impact-output" class="bg-amber-50 border border-amber-300 p-5 rounded-2xl flex items-start gap-4">
+                            <div class="w-12 h-12 bg-amber-500 text-white rounded-xl flex items-center justify-center shrink-0 text-xl">
+                                <i class="fa-solid fa-basket-shopping" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base" id="impact-title">1 Week of Healthy Meals</h4>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-1" id="impact-desc">Your $25 donation covers balanced breakfast, lunch, and dinner for a child for an entire week.</p>
+                            </div>
+                        </div>
+
+                        <!-- Direct Financial Details -->
+                        <div class="pt-4 border-t border-slate-200 space-y-4">
+                            <h4 class="font-bold text-slate-900 text-sm">Direct Bank & E-Wallet Transfers:</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                                <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                                    <span class="block font-bold text-slate-800">Bank Transfer (BDO)</span>
+                                    <span class="text-slate-600">Account Name: Ephesus Home Inc.</span>
+                                    <span class="block font-mono text-amber-700 font-bold mt-1">1234 - 5678 - 9012</span>
+                                </div>
+                                <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                                    <span class="block font-bold text-slate-800">GCash / Maya E-Wallet</span>
+                                    <span class="text-slate-600">Account Name: Ephesus Home</span>
+                                    <span class="block font-mono text-amber-700 font-bold mt-1">+63 917 123 4567</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- In-Kind Wishlist & Volunteer Modal Trigger -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <!-- Wishlist Card -->
+                        <div class="bg-brand-50 p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                    <i class="fa-solid fa-gift text-amber-600" aria-hidden="true"></i> Urgent Wishlist
+                                </h3>
+                                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full">In-Kind Items</span>
+                            </div>
+                            <p class="text-xs text-slate-600">You can drop off or order items directly to our location:</p>
+
+                            <ul class="space-y-3 text-xs sm:text-sm">
+                                <li class="p-3 bg-white rounded-xl border border-slate-200 flex justify-between items-center">
+                                    <span><i class="fa-solid fa-box-archive text-amber-600 mr-2" aria-hidden="true"></i> Rice & Canned Goods</span>
+                                    <button onclick="pledgeItem('Rice & Canned Goods')" class="text-xs text-amber-700 font-bold hover:underline">Pledge Item</button>
+                                </li>
+                                <li class="p-3 bg-white rounded-xl border border-slate-200 flex justify-between items-center">
+                                    <span><i class="fa-solid fa-shirt text-amber-600 mr-2" aria-hidden="true"></i> Children's Clothes (Ages 4-16)</span>
+                                    <button onclick="pledgeItem('Children Clothes')" class="text-xs text-amber-700 font-bold hover:underline">Pledge Item</button>
+                                </li>
+                                <li class="p-3 bg-white rounded-xl border border-slate-200 flex justify-between items-center">
+                                    <span><i class="fa-solid fa-pen-ruler text-amber-600 mr-2" aria-hidden="true"></i> School Notebooks & Pens</span>
+                                    <button onclick="pledgeItem('School Supplies')" class="text-xs text-amber-700 font-bold hover:underline">Pledge Item</button>
+                                </li>
+                                <li class="p-3 bg-white rounded-xl border border-slate-200 flex justify-between items-center">
+                                    <span><i class="fa-solid fa-pump-soap text-amber-600 mr-2" aria-hidden="true"></i> Hygiene Kits & Diapers</span>
+                                    <button onclick="pledgeItem('Hygiene Kits')" class="text-xs text-amber-700 font-bold hover:underline">Pledge Item</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Volunteer Action Box -->
+                        <div class="bg-gradient-to-br from-amber-500 to-amber-600 text-white p-6 rounded-3xl shadow-md space-y-3">
+                            <h3 class="text-xl font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-handshake-angle" aria-hidden="true"></i> Become a Volunteer
+                            </h3>
+                            <p class="text-xs sm:text-sm text-amber-50">Share your time, teaching skills, or organize fun activities for our children.</p>
+                            <button onclick="openVolunteerModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl shadow transition text-sm">
+                                Apply as a Volunteer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT US SECTION -->
+        <section id="contact" class="py-20 bg-brand-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Get In Touch</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Contact Us & Visit Us</h2>
+                    <p class="text-slate-600 text-base sm:text-lg">Have questions or want to schedule an official visit? Reach out to our admin team below.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Contact Details -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-brand-surface p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-6">
+                            <h3 class="text-xl font-bold text-slate-900">Ephesus Home Office</h3>
+
+                            <div class="space-y-4 text-sm text-slate-600">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center shrink-0 mt-1">
+                                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <strong class="block text-slate-900">Address:</strong>
+                                        Ephesus Home Road, Brgy. Sanctuary, Guiguinto, Bulacan, Philippines
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center shrink-0 mt-1">
+                                        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <strong class="block text-slate-900">Phone / Landline:</strong>
+                                        (044) 791-1234 / +63 917 888 9900
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center shrink-0 mt-1">
+                                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <strong class="block text-slate-900">Email Address:</strong>
+                                        info@ephesushome.org.ph
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center shrink-0 mt-1">
+                                        <i class="fa-solid fa-clock" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <strong class="block text-slate-900">Visiting Hours:</strong>
+                                        Mon - Sat: 9:00 AM - 4:00 PM (By appointment)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact & Visit Form -->
+                    <div class="lg:col-span-7 bg-brand-surface p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm">
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">Send a Message or Request Visit</h3>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="contact-name" class="block text-xs font-bold uppercase text-slate-700 mb-1">Full Name *</label>
+                                    <input type="text" id="contact-name" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-brand-50 focus:bg-white text-slate-900 text-sm">
+                                </div>
+                                <div>
+                                    <label for="contact-email" class="block text-xs font-bold uppercase text-slate-700 mb-1">Email Address *</label>
+                                    <input type="email" id="contact-email" required placeholder="john@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-brand-50 focus:bg-white text-slate-900 text-sm">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="contact-phone" class="block text-xs font-bold uppercase text-slate-700 mb-1">Phone Number</label>
+                                    <input type="tel" id="contact-phone" placeholder="+63 900 000 0000" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-brand-50 focus:bg-white text-slate-900 text-sm">
+                                </div>
+                                <div>
+                                    <label for="contact-reason" class="block text-xs font-bold uppercase text-slate-700 mb-1">Inquiry Type</label>
+                                    <select id="contact-reason" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-brand-50 focus:bg-white text-slate-900 text-sm">
+                                        <option value="General Inquiry">General Inquiry</option>
+                                        <option value="Schedule Visit">Schedule Visit / Campus Tour</option>
+                                        <option value="Sponsorship">Sponsoring a Child</option>
+                                        <option value="Partnership">Corporate Social Responsibility</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="contact-message" class="block text-xs font-bold uppercase text-slate-700 mb-1">Message / Notes *</label>
+                                <textarea id="contact-message" rows="4" required placeholder="How can we help you?" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-brand-50 focus:bg-white text-slate-900 text-sm"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl shadow transition text-sm">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUGGESTION BOX / FEEDBACK SECTION -->
+        <section id="feedback" class="py-20 bg-brand-surface border-t border-slate-200">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Community Voice</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Suggestion Box & Feedback</h2>
+                    <p class="text-slate-600 text-base">We continuously strive to improve our orphan care services and donor experience. Share your thoughts or suggestions anonymously or directly with us.</p>
+                </div>
+
+                <div class="bg-brand-50 p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-md">
+                    <form onsubmit="handleFeedbackSubmit(event)" class="space-y-6">
+                        <!-- Category Selector -->
+                        <div>
+                            <label for="feedback-category" class="block text-sm font-bold text-slate-800 mb-2">Category *</label>
+                            <select id="feedback-category" required class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-amber-500">
+                                <option value="" disabled selected>Select a category...</option>
+                                <option value="Facility & Care">Child Facility & Physical Care</option>
+                                <option value="Donation Process">Donation & Transparency Experience</option>
+                                <option value="Volunteering">Volunteering Program</option>
+                                <option value="Website Accessibility">Website Accessibility & Features</option>
+                                <option value="General">General Suggestion</option>
+                            </select>
+                        </div>
+
+                        <!-- Rating selection -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-800 mb-2">Overall Satisfaction Rating</label>
+                            <div class="flex items-center gap-3" role="radiogroup" aria-label="Satisfaction Rating">
+                                <button type="button" onclick="setRating(1)" class="star-btn text-2xl text-slate-300 hover:text-amber-400 focus:outline-none" aria-label="1 star"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+                                <button type="button" onclick="setRating(2)" class="star-btn text-2xl text-slate-300 hover:text-amber-400 focus:outline-none" aria-label="2 stars"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+                                <button type="button" onclick="setRating(3)" class="star-btn text-2xl text-slate-300 hover:text-amber-400 focus:outline-none" aria-label="3 stars"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+                                <button type="button" onclick="setRating(4)" class="star-btn text-2xl text-slate-300 hover:text-amber-400 focus:outline-none" aria-label="4 stars"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+                                <button type="button" onclick="setRating(5)" class="star-btn text-2xl text-slate-300 hover:text-amber-400 focus:outline-none" aria-label="5 stars"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+                                <span id="rating-label" class="text-xs font-semibold text-slate-500 ml-2">Click to rate</span>
+                            </div>
+                        </div>
+
+                        <!-- Feedback Message -->
+                        <div>
+                            <label for="feedback-message" class="block text-sm font-bold text-slate-800 mb-2">Your Feedback / Suggestion *</label>
+                            <textarea id="feedback-message" rows="4" required placeholder="Please write your constructive feedback or suggestions here..." class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-amber-500"></textarea>
+                        </div>
+
+                        <!-- Anonymous Toggle -->
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="anonymous-check" onchange="toggleAnonymousFields(this.checked)" class="w-5 h-5 accent-amber-500 rounded cursor-pointer">
+                            <label for="anonymous-check" class="text-sm font-medium text-slate-700 cursor-pointer">Submit anonymously</label>
+                        </div>
+
+                        <!-- Name & Email (Shown unless anonymous) -->
+                        <div id="feedback-user-info" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="feedback-name" class="block text-xs font-bold uppercase text-slate-700 mb-1">Your Name</label>
+                                <input type="text" id="feedback-name" placeholder="Jane Doe" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm">
+                            </div>
+                            <div>
+                                <label for="feedback-email" class="block text-xs font-bold uppercase text-slate-700 mb-1">Your Email</label>
+                                <input type="email" id="feedback-email" placeholder="jane@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow transition text-sm">
+                            Submit Feedback
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-white py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Org info -->
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white">
+                            <i class="fa-solid fa-hands-holding-child text-xl" aria-hidden="true"></i>
+                        </div>
+                        <span class="font-bold text-lg">Ephesus Home of Mary and Joseph Inc.</span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+                        A non-profit licensed child-caring institution providing shelter, love, and education to orphaned and underprivileged children.
+                    </p>
+                </div>
+
+                <!-- Navigation Quick Links -->
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Quick Navigation</h3>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li><a href="#home" class="hover:underline">Home / Overview</a></li>
+                        <li><a href="#about" class="hover:underline">About Us</a></li>
+                        <li><a href="#services" class="hover:underline">Services & Programs</a></li>
+                        <li><a href="#donate" class="hover:underline">How to Donate</a></li>
+                        <li><a href="#contact" class="hover:underline">Contact Us</a></li>
+                        <li><a href="#feedback" class="hover:underline">Suggestion Box</a></li>
+                    </ul>
+                </div>
+
+                <!-- Accessibility & Legal -->
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Accessibility</h3>
+                    <p class="text-xs text-slate-400 mb-3">Designed adhering to WCAG standards with high contrast & screen reader support.</p>
+                    <button onclick="toggleCustomizer()" class="text-xs font-bold bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg border border-slate-700 text-amber-300">
+                        Open Customizer
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Ephesus Home of Mary and Joseph Inc. All rights reserved.</p>
+                <div class="flex space-x-4 text-base text-slate-400">
+                    <a href="#" aria-label="Facebook Page" class="hover:text-amber-400"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Instagram Page" class="hover:text-amber-400"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="YouTube Channel" class="hover:text-amber-400"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SERVICE DETAIL MODAL -->
+    <div id="service-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-surface max-w-lg w-full rounded-3xl p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="modal-service-title" class="text-xl font-bold text-slate-900">Service Title</h3>
+                <button onclick="closeServiceModal()" class="text-slate-400 hover:text-slate-600 p-1" aria-label="Close modal">
+                    <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p id="modal-service-desc" class="text-sm text-slate-600 leading-relaxed"></p>
+            <div class="pt-3 text-right">
+                <button onclick="closeServiceModal()" class="bg-amber-500 text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-amber-600 transition">
+                    Got it
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VOLUNTEER MODAL -->
+    <div id="volunteer-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-surface max-w-md w-full rounded-3xl p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-xl font-bold text-slate-900">Volunteer Registration</h3>
+                <button onclick="closeVolunteerModal()" class="text-slate-400 hover:text-slate-600 p-1" aria-label="Close modal">
+                    <i class="fa-solid fa-xmark text-xl" aria-hidden="true"></i>
+                </button>
+            </div>
+            <form onsubmit="handleVolunteerSubmit(event)" class="space-y-3">
+                <div>
+                    <label for="vol-name" class="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
+                    <input type="text" id="vol-name" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">
+                </div>
+                <div>
+                    <label for="vol-email" class="block text-xs font-bold text-slate-700 mb-1">Email *</label>
+                    <input type="email" id="vol-email" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">
+                </div>
+                <div>
+                    <label for="vol-skills" class="block text-xs font-bold text-slate-700 mb-1">Skills / How you can help</label>
+                    <input type="text" id="vol-skills" placeholder="e.g. Tutoring, Music, Medical assistance" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm">
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl text-sm transition mt-2">
+                    Submit Application
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" aria-live="polite"></div>
+
+    <script>
+        // State variables
+        let fontScale = 1.0;
+        let selectedRating = 0;
+
+        // Accessibility Screen Reader Announcer
+        function announceSR(message) {
+            const el = document.getElementById('sr-announcement');
+            if (el) el.textContent = message;
+        }
+
+        // Font Size Adjuster Controls
+        function changeFontSize(delta) {
+            fontScale = Math.min(Math.max(fontScale + delta, 0.8), 1.4);
+            document.documentElement.style.setProperty('--font-scale', fontScale);
+            announceSR(`Font size updated to ${Math.round(fontScale * 100)} percent`);
+        }
+
+        function resetFontSize() {
+            fontScale = 1.0;
+            document.documentElement.style.setProperty('--font-scale', fontScale);
+            announceSR('Font size reset to default');
+        }
+
+        // Customizer Drawer Toggle
+        function toggleCustomizer() {
+            const drawer = document.getElementById('customizer-drawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const bars = document.getElementById('menu-icon-bars');
+            const close = document.getElementById('menu-icon-close');
+            const btn = document.getElementById('mobile-menu-btn');
+
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                bars.classList.add('hidden');
+                close.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+            } else {
+                menu.classList.add('hidden');
+                bars.classList.remove('hidden');
+                close.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        // Color Theme Presets
+        function setTheme(themeName) {
+            document.body.classList.remove('theme-ocean', 'theme-pastel', 'theme-high-contrast');
+            if (themeName !== 'default') {
+                document.body.classList.add(`theme-${themeName}`);
+            }
+            announceSR(`Theme changed to ${themeName}`);
+            showToast(`Theme changed to ${themeName}`);
+        }
+
+        // Dyslexic / High Legibility Font Mode
+        function toggleLegibilityFont(enabled) {
+            if (enabled) {
+                document.body.style.fontFamily = 'Lexend, sans-serif';
+                document.body.style.letterSpacing = '0.03em';
+                announceSR('High legibility font mode enabled');
+            } else {
+                document.body.style.fontFamily = 'Lexend, Inter, sans-serif';
+                document.body.style.letterSpacing = 'normal';
+                announceSR('Standard font mode restored');
+            }
+        }
+
+        // Impact Calculator Logic
+        function updateImpactCalculator(val) {
+            document.getElementById('donation-amount-text').innerText = val;
+            const title = document.getElementById('impact-title');
+            const desc = document.getElementById('impact-desc');
+
+            if (val < 30) {
+                title.innerText = "1 Week of Healthy Meals";
+                desc.innerText = "Your $" + val + " donation covers balanced breakfast, lunch, and dinner for a child for an entire week.";
+            } else if (val < 75) {
+                title.innerText = "School Supplies & Uniform Set";
+                desc.innerText = "Your $" + val + " contribution provides school shoes, uniforms, notebooks, and pens for school term.";
+            } else if (val < 150) {
+                title.innerText = "Complete Medical & Health Care";
+                desc.innerText = "Your $" + val + " supports doctor visits, essential vitamins, pediatric checkups, and dental health.";
+            } else {
+                title.innerText = "Comprehensive Monthly Care Package";
+                desc.innerText = "Your generous $" + val + " covers full food, shelter, education, and recreation for a child for 1 full month!";
+            }
+        }
+
+        // Pledge Item Wishlist Action
+        function pledgeItem(item) {
+            showToast(`Thank you for offering to pledge: ${item}! Please contact us to coordinate delivery.`);
+        }
+
+        // Service Modal Handlers
+        function openServiceModal(title, desc) {
+            document.getElementById('modal-service-title').innerText = title;
+            document.getElementById('modal-service-desc').innerText = desc;
+            document.getElementById('service-modal').classList.remove('hidden');
+        }
+
+        function closeServiceModal() {
+            document.getElementById('service-modal').classList.add('hidden');
+        }
+
+        // Volunteer Modal Handlers
+        function openVolunteerModal() {
+            document.getElementById('volunteer-modal').classList.remove('hidden');
+        }
+
+        function closeVolunteerModal() {
+            document.getElementById('volunteer-modal').classList.add('hidden');
+        }
+
+        function handleVolunteerSubmit(e) {
+            e.preventDefault();
+            closeVolunteerModal();
+            showToast("Thank you for applying as a volunteer! Our coordinator will contact you shortly.");
+        }
+
+        // Rating Star selector for Suggestion Box
+        function setRating(rating) {
+            selectedRating = rating;
+            const stars = document.querySelectorAll('.star-btn');
+            stars.forEach((star, idx) => {
+                if (idx < rating) {
+                    star.classList.remove('text-slate-300');
+                    star.classList.add('text-amber-400');
+                } else {
+                    star.classList.remove('text-amber-400');
+                    star.classList.add('text-slate-300');
+                }
+            });
+            const label = document.getElementById('rating-label');
+            label.innerText = `${rating} of 5 stars`;
+        }
+
+        function toggleAnonymousFields(isAnonymous) {
+            const userInfo = document.getElementById('feedback-user-info');
+            if (isAnonymous) {
+                userInfo.classList.add('hidden');
+            } else {
+                userInfo.classList.remove('hidden');
+            }
+        }
+
+        // Contact & Feedback Form Actions
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast("Thank you for reaching out! Your message has been sent successfully.");
+            e.target.reset();
+        }
+
+        function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            showToast("Thank you for your valuable feedback! We appreciate your suggestions.");
+            e.target.reset();
+            setRating(0);
+            document.getElementById('rating-label').innerText = "Click to rate";
+        }
+
+        // Notification Toast Handler
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl text-xs sm:text-sm font-medium border border-slate-700 flex items-center gap-3 transform transition-all duration-300 translate-y-4 opacity-0';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-amber-400 text-lg" aria-hidden="true"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Close Modals on Escape Key Press
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeServiceModal();
+                closeVolunteerModal();
+                document.getElementById('customizer-drawer').classList.add('translate-x-full');
+            }
+        });
+    </script>
+</body>
+</html>
